@@ -1,3 +1,7 @@
 langchain
+langchain-community
 langchain-nvidia-ai-endpoints
+langchain_ollama
 fastapi
+python-multipart
+pypdf
