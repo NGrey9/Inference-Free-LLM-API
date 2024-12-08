@@ -11,6 +11,8 @@ from fastapi import (FastAPI, Request, HTTPException,
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
+import http.server
+import socketserver
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
@@ -27,7 +29,6 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 
 # Main Source Code
 NVIDIA_API_KEY = os.environ["NVIDIA_API_KEY"]
-ROOT_DIR = os.environ["ROOT_DIR"]
 
 
 class ModelName(BaseModel):
@@ -40,7 +41,7 @@ def create_vector_store():
         from langchain_community.vectorstores.faiss import FAISS
         from langchain_ollama.embeddings import OllamaEmbeddings
 
-        pdf_filepath = f"{ROOT_DIR}/uploaded/latest.pdf"
+        pdf_filepath = "./uploaded/latest.pdf"
 
         loader = PyPDFLoader(pdf_filepath)
         text_splitter = RecursiveCharacterTextSplitter(
@@ -178,7 +179,7 @@ class ChatAPI:
                             status_code=400,
                             detail=f"Invalid file type: {file.content_type}. Only PDF files are allowed."
                         )
-                    with open(f"{ROOT_DIR}/uploaded/latest.pdf", "wb") as f:
+                    with open(f"./uploaded/latest.pdf", "wb") as f:
                         content = await file.read()
                         f.write(content)
                     self.vector_store = create_vector_store()
@@ -190,11 +191,11 @@ class ChatAPI:
                 else:
                     return self.handle_message(message, self.chain, chain_type="chain")
             except Exception as e:
-                raise e
                 return HTTPException(status_code=400, detail=f"Invalid JSON format: {str(e)}")
 
     def run(self, host='0.0.0.0', port=3000):
         uvicorn.run(self.api, host=host, port=port)
+
 
 
 if __name__ == "__main__":

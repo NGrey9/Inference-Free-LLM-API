@@ -5,3 +5,4 @@ langchain_ollama
 fastapi
 python-multipart
 pypdf
+python-dotenv

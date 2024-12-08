@@ -1,3 +1,8 @@
 .env
 uploaded/*
 test.py
+
+build.log
+Dockerfile
+supervisord.conf
+test.ipynb

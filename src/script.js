@@ -20,6 +20,7 @@ function appendMessage(sender, text) {
     messageDiv.appendChild(bubbleDiv);
     chatBox.appendChild(messageDiv);
     chatBox.scrollTop = chatBox.scrollHeight; 
+    return messageDiv
 }
 
 fileInput.addEventListener("change", (e) => {
@@ -30,6 +31,18 @@ fileInput.addEventListener("change", (e) => {
     }
 });
 
+let typingInterval;
+
+function showTypingEffect() {
+    const loadingMessageDiv = appendMessage("bot", ".");
+    let dots = "";
+
+    typingInterval = setInterval(() => {
+        dots = dots.length < 3 ? dots + "." : "";
+        loadingMessageDiv.querySelector(".bubble").textContent = `.${dots}`;
+    }, 300); 
+    return loadingMessageDiv; 
+}
 
 async function sendMessage() {
     const userMessage = userInput.value.trim();
@@ -37,6 +50,7 @@ async function sendMessage() {
     if (userMessage === "") return; 
 
     appendMessage("user", userMessage); 
+    const loadingMessageDiv = showTypingEffect();
     userInput.value = ""; 
 
     const formData = new FormData();
@@ -54,11 +68,15 @@ async function sendMessage() {
 
         if (response.ok) {
             const data = await response.json();
+            loadingMessageDiv.remove();
             appendMessage("bot", data.processed_message); 
+            
         } else {
+            loadingMessageDiv.remove();
             appendMessage("bot", "Error: Unable to process the message.");
         }
     } catch (error) {
+        loadingMessageDiv.remove();
         appendMessage("bot", "Error: Unable to connect to the server.");
     }
 }
