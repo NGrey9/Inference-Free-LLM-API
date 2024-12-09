@@ -36,17 +36,17 @@ The python back-end API will run on 3000 port and you can enter website at <a hr
 
 The RAG system will be deployed on your CPU. So, It take quite many time retrieving vector data. However, this application is actually useful and worth trying.
 <p align="center">
-  <img src="https://github.com/NGrey9/Inference-Free-LLM-API/blob/api/assets/chat.gif">
+  <img src="https://github.com/NGrey9/Inference-Free-LLM-API/blob/main/assets/chat.gif">
 </p>
 
 It also remember the history of the conversation.
 <p align="center">
-  <img src="https://github.com/NGrey9/Inference-Free-LLM-API/blob/api/assets/chat1.gif">
+  <img src="https://github.com/NGrey9/Inference-Free-LLM-API/blob/main/assets/chat1.gif">
 </p>
 
 So what about Vietnamese...
 <p align="center">
-  <img src="https://github.com/NGrey9/Inference-Free-LLM-API/blob/api/assets/chat2.gif">
+  <img src="https://github.com/NGrey9/Inference-Free-LLM-API/blob/main/assets/chat2.gif">
 </p>
 
 ## Provisional Conclusion
